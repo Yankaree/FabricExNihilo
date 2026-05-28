@@ -1,94 +1,37 @@
-buildscript {
-    dependencies {
-        classpath 'org.codehaus.groovy:groovy-json:3.0.9'
-    }
-}
-
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT'
+    id 'fabric-loom' version "$loom_version"
     id 'maven-publish'
 }
 
-base.archivesName = project.archives_base_name ?: "FabricExNihilo"
-version = project.mod_version ?: "0.1.0" + "+mc" + (project.minecraft_version ?: "1.21.11")
-group = project.maven_group ?: "me.ngcsonsplash.fabricexnihilo"
+group = 'com.ngcsonsplash.fabricaeexnihilo'
+version = '1.0.0+mc' + minecraft_version
+archivesBaseName = 'FabricExNihilo'
 
 repositories {
     mavenCentral()
     maven { url "https://maven.fabricmc.net/" }
-    maven { url "https://maven.isxander.dev/releases" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
+    maven { url "https://maven.isxander.dev/releases" }
     maven { url "https://maven.wispforest.io" }
     maven { url "https://maven.architectury.dev/" }
+    maven { url "https://maven.modrinth.com/repository/releases" }
     maven { url "https://jitpack.io" }
 }
 
-// Dummy config to allow CI build
-ext {
-    yacl_version = "3.5.0" // nếu chưa có version cho 1.21.11, dùng tạm cũ
-    fabric_version = "0.101.2+1.21.11" // Fabric API chính thức 1.21.11
-    loader_version = "0.16.3" // Fabric Loader 1.21.11
-    yarn_mappings = "1.21.11+build.1"
-}
-
-def settings = [:] // dummy fallback
-if (file("config.gradle").exists()) {
-    apply from: "config.gradle", to: settings
-}
-
 dependencies {
-    minecraft "com.mojang:minecraft:1.21.11"
-    mappings "net.fabricmc:yarn:1.21.11+build.1:v2"
-    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    minecraft "com.mojang:minecraft:$minecraft_version"
+    mappings "net.fabricmc:yarn:$yarn_mappings:v2"
+    modImplementation "net.fabricmc:fabric-loader:$loader_version"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_version"
 
-    // Fabric API
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-
-    // YACL
-    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}"
-
-    // Các lib khác tạm comment nếu không cần ngay
-    // modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
-    // modCompileOnly "dev.architectury:architectury-fabric:$architectury_version"
-    // modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
-    // modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
-}
-
-loom {
-    runs {
-        datagen {
-            inherit server
-            name "Data Generation"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=fabricexnihilo"
-
-            ideConfigGenerated = true
-            runDir "build/datagen/"
-        }
-    }
-
-    mods {
-        fabricexnihilo {
-            sourceSet sourceSets.main
-            modFiles.from file("src/main/generated")
-        }
-    }
-}
-
-tasks.register('copyDatagenOverrides', Copy) {
-    from "run/config/fabric_loader_dependencies.json"
-    into "build/datagen/config"
-}
-
-clean.finalizedBy(tasks.copyDatagenOverrides)
-tasks.runDatagen.dependsOn(tasks.copyDatagenOverrides)
-clean.delete("src/main/generated")
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    it.options.release.set(21)
+    // Mod libraries
+    modImplementation "dev.isxander:yet-another-config-lib:$yacl_version"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
+    modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
+    modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
+    modCompileOnly "dev.architectury:architectury-fabric:$architectury_version"
+    modCompileOnly "maven.modrinth:jade:$jade_version+fabric"
 }
 
 java {
@@ -97,19 +40,21 @@ java {
     withSourcesJar()
 }
 
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release.set(21)
+}
+
 jar {
     from("LICENSE") {
-        rename { "${it}_${archives_base_name}" }
-    }
-    dependsOn tasks.runDatagen
-    from("src/main/generated") {
-        exclude "README.md"
-        exclude ".cache"
+        rename { "${it}_${archivesBaseName}" }
     }
 }
 
 publishing {
-    publications.register("mavenJava", MavenPublication) {
-        from components.java
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
     }
 }
