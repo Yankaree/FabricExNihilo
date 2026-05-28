@@ -5,7 +5,7 @@ plugins {
 
 group = 'com.ngcsonsplash.fabricaeexnihilo'
 version = '1.0.0+mc' + minecraft_version
-archivesBaseName = 'FabricExNihilo'
+base.archivesName = 'FabricExNihilo'
 
 repositories {
     mavenCentral()
@@ -45,9 +45,17 @@ tasks.withType(JavaCompile).configureEach {
     it.options.release.set(21)
 }
 
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
 jar {
     from("LICENSE") {
-        rename { "${it}_${archivesBaseName}" }
+        rename { "${it}_${base.archivesName.get()}" }
     }
 }
 
