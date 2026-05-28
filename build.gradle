@@ -1,93 +1,78 @@
-buildscript {
-    dependencies {
-        classpath 'org.codehaus.groovy:groovy-json:3.0.9'
-    }
-}
-
 plugins {
-    id 'fabric-loom' version '1.16-SNAPSHOT'
+    id 'fabric-loom' version '1.16'
     id 'maven-publish'
 }
 
 group = 'me.ngcsonsplash.fabricaeexnihilo'
 version = '1.0.0+mc1.21.11'
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    withSourcesJar()
-}
+archivesBaseName = 'fabricaeexnihilo'
 
 repositories {
     mavenCentral()
+
     maven { url "https://maven.fabricmc.net/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
+    maven { url "https://maven.saps.dev/minecraft" }
     maven { url "https://maven.wispforest.io" }
     maven { url "https://maven.architectury.dev/" }
     maven { url "https://maven.quiltmc.org/repository/release" }
     maven { url "https://maven.isxander.dev/releases" }
-    maven { url "https://api.modrinth.com/maven" }
     maven { url "https://jitpack.io" }
 }
 
-ext {
-    minecraft_version = '1.21.11'
-    yarn_mappings = '1.21.11+build.6'
-    loader_version = '0.19.2'
-    fabric_api_version = '0.141.4+1.21.11'
+def minecraft_version = '1.21.11'
+def yarn_mappings = '1.21.11+build.6'
+def loader_version = '0.19.2'
+def fabric_api_version = '0.141.4+1.21.11'
 
-    // Versions
-    rei_version = '12.1.0'
-    jei_version = '12.1.0'
-    modmenu_version = '7.1.10'
-    emi_version = '0.8.0'
-    yacl_version = '3.5.0+1.21.11-fabric'
-    jade_version = '2.18.0+fabric'
-    wthit_version = '9.9.0'
-    megane_version = '2.8.0'
-}
+// Mod versions
+def rei_version = '13.2.9'
+def jei_version = '14.13.1.245'
+def emi_version = '1.2.1'
+def modmenu_version = '6.5.0'
+def yacl_version = '3.5.0+1.21.11-fabric'
 
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    minecraft "com.mojang:minecraft:$minecraft_version"
+    mappings "net.fabricmc:yarn:$yarn_mappings:v2"
+    modImplementation "net.fabricmc:fabric-loader:$loader_version"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_api_version"
 
-    // Mod APIs
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
-    modCompileOnly "dev.architectury:architectury-fabric:7.10.50"
-    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-    modCompileOnly "com.terraformersmc:modmenu:${modmenu_version}"
-    modCompileOnly "maven.modrinth:jade:${jade_version}"
-    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthit_version}"
-    modCompileOnly "lol.bai.megane:megane-api:${megane_version}"
+    // Client-side mods (optional)
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
+    modCompileOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"
+    modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
+    modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
 
     // YACL
-    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}"
+    modImplementation "dev.isxander:yet-another-config-lib:$yacl_version"
 
-    // Annotation Processor
-    modImplementation annotationProcessor(include("com.github.mattidragon:configtoolkit:1.3.1"))
-
-    // Runtime Mods
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}" // JEI/REI
-    modRuntimeOnly "dev.emi:emi-fabric:${emi_version}"
-    modRuntimeOnly "com.terraformersmc:modmenu:${modmenu_version}"
-    modRuntimeOnly "maven.modrinth:jade:${jade_version}"
-    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthit_version}"
-    modRuntimeOnly "lol.bai.megane:megane-runtime:${megane_version}"
-    modRuntimeOnly "lol.bai.megane:megane-vanilla:${megane_version}"
+    // Runtime dependencies
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+    modRuntimeOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"
+    modRuntimeOnly "dev.emi:emi-fabric:$emi_version"
+    modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
 }
 
 loom {
     runs {
+        client {
+            name = "Client"
+            vmArgs("-Xmx2G")
+        }
+        server {
+            name = "Server"
+            vmArgs("-Xmx2G")
+        }
         datagen {
-            name "Data Generation"
+            name = "Data Generation"
+            server()
+            environment "server" // fix lỗi null environment
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
             vmArg "-Dfabric-api.datagen.modid=fabricaeexnihilo"
-
-            runDir "build/datagen/"
+            runDir = file("build/datagen/")
             ideConfigGenerated = true
         }
     }
@@ -100,20 +85,20 @@ loom {
     }
 }
 
-// Copy datagen overrides
 tasks.register('copyDatagenOverrides', Copy) {
     from "run/config/fabric_loader_dependencies.json"
     into "build/datagen/config"
 }
+
 clean.finalizedBy(tasks.copyDatagenOverrides)
-tasks.runDatagen.dependsOn(tasks.copyDatagenOverrides)
+tasks.named("runDatagen").configure { dependsOn tasks.copyDatagenOverrides }
+
 clean.delete("src/main/generated")
 
-processResources {
-    inputs.property "version", project.version
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -133,7 +118,9 @@ jar {
 }
 
 publishing {
-    publications.register("mavenJava", MavenPublication) {
-        from components.java
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
     }
 }
