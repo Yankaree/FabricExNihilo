@@ -1,0 +1,34 @@
+package ngcsonsplash.fabricaeexnihilo.datagen;
+
+import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.AdvancementProvider;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.ModelProvider;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.loot_tables.BlockLootTableProvider;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.loot_tables.StrainerLootTableProvider;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.recipe.*;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.tag.BlockTagProvider;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.tag.FluidTagProvider;
+import ngcsonsplash.fabricaeexnihilo.datagen.provider.tag.ItemTagProvider;
+
+public class FENDatagen implements DataGeneratorEntrypoint {
+
+    @Override
+    public void onInitializeDataGenerator(FabricDataGenerator generator) {
+        final FabricDataGenerator.Pack pack = generator.createPack();
+        pack.addProvider(ModelProvider::new);
+        pack.addProvider(AdvancementProvider::new);
+        pack.addProvider(StrainerLootTableProvider::new);
+        pack.addProvider(BlockLootTableProvider::new);
+        pack.addProvider(FluidTagProvider::new);
+        var blockTags = pack.addProvider(BlockTagProvider::new);
+        pack.addProvider((output, registries) -> new ItemTagProvider(output, registries, blockTags));
+        // Vanilla only uses one provider, but we split for organisation
+        pack.addProvider(BaseRecipeProvider::new);
+        pack.addProvider(BarrelRecipeProvider::new);
+        pack.addProvider(ToolRecipeProvider::new);
+        pack.addProvider(CrucibleRecipeProvider::new);
+        pack.addProvider(WitchWaterRecipeProvider::new);
+        pack.addProvider(SieveRecipeProvider::new);
+    }
+}

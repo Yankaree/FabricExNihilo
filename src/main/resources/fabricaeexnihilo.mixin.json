@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ngcsonsplash.fabricaeexnihilo.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AnvilScreenHandlerMixin",
+    "BlockHarvestMixin",
+    "BlockWithEntityInvoker",
+    "BottleUseMixin",
+    "EnchantmentMixin",
+    "EntityMixin",
+    "FluidBlockAccess",
+    "FluidBlockMixin",
+    "ItemEntityMixin",
+    "ItemModelGeneratorAccess",
+    "LivingEntityMixin",
+    "LootContextTypesAccess"
+  ],
+  "client": [
+    "client.BlockModelRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

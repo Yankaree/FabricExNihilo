@@ -1,0 +1,14 @@
+{
+  "type": "fabricaeexnihilo:crucible_heat",
+  "block": "techreborn:nitro_diesel",
+  "heat": 16,
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "registry": "minecraft:block",
+      "values": [
+        "techreborn:nitro_diesel"
+      ]
+    }
+  ]
+}

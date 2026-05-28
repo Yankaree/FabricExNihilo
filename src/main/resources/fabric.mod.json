@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricaeexnihilo",
+  "name": "FabricaeExNihilo",
+  "description": "Fabricate from nothing.",
+  "authors": [
+    "ngcsonsplash",
+    "LordDeatHunter",
+    "MattiDragon"
+  ],
+  "version": "${version}",
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ngcsonsplash.fabricaeexnihilo.FabricaeExNihilo"
+    ],
+    "client": [
+      "ngcsonsplash.fabricaeexnihilo.client.FabricaeExNihiloClient"
+    ],
+    "modmenu": [
+      "ngcsonsplash.fabricaeexnihilo.client.config.ModmenuPlugin"
+    ],
+    "fabricaeexnihilo:api": [
+      "ngcsonsplash.fabricaeexnihilo.compatibility.DefaultApiModule::INSTANCE",
+      "ngcsonsplash.fabricaeexnihilo.compatibility.TechRebornApiModule::INSTANCE",
+      "ngcsonsplash.fabricaeexnihilo.compatibility.IndustrialRevolutionApiModule::INSTANCE",
+      "ngcsonsplash.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule::INSTANCE",
+      "ngcsonsplash.fabricaeexnihilo.compatibility.MythicMetalsApiModule::INSTANCE"
+    ],
+    "rei_client": [
+      "ngcsonsplash.fabricaeexnihilo.compatibility.rei.PluginEntry"
+    ],
+    "emi": [
+      "ngcsonsplash.fabricaeexnihilo.compatibility.emi.FENEmiPlugin"
+    ],
+    "jade": [
+      "ngcsonsplash.fabricaeexnihilo.compatibility.jade.FENJadePlugin"
+    ],
+    "fabric-datagen": [
+      "ngcsonsplash.fabricaeexnihilo.datagen.FENDatagen"
+    ]
+  },
+  "mixins": [
+    "fabricaeexnihilo.mixin.json"
+  ],
+  "custom": {
+    "megane:modules": [
+      "ngcsonsplash.fabricaeexnihilo.compatibility.megane.FENMeganeModule"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "fabric-api": ">=0.100.0",
+    "minecraft": "1.21.11",
+    "java": ">=21"
+  }
+}
