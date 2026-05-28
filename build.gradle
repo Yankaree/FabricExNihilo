@@ -5,7 +5,18 @@ plugins {
 
 group = 'me.ngcsonsplash.fabricaeexnihilo'
 version = '1.0.0+mc1.21.11'
-archivesBaseName = 'FabricExNihilo'
+plugins {
+    id 'fabric-loom' version '1.16-SNAPSHOT'
+    id 'maven-publish'
+    id 'base' // thêm plugin base để dùng archiveBaseName
+}
+
+group = 'me.ngcsonsplash.fabricaeexnihilo'
+version = '1.0.0+mc1.21.11'
+
+base {
+    archivesName.set('FabricExNihilo') // dùng method set()
+}
 
 repositories {
     mavenCentral()
