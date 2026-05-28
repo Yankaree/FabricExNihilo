@@ -1,61 +1,16 @@
-plugins {
-    id 'fabric-loom' version '1.16-SNAPSHOT'
-    id 'maven-publish'
-}
-
-group = 'me.ngcsonsplash.fabricaeexnihilo'
-version = '1.0.0+mc1.21.11'
-plugins {
-    id 'fabric-loom' version '1.16-SNAPSHOT'
-    id 'maven-publish'
-    id 'base' // thêm plugin base để dùng archiveBaseName
-}
-
-group = 'me.ngcsonsplash.fabricaeexnihilo'
-version = '1.0.0+mc1.21.11'
-
-base {
-    archivesName.set('FabricExNihilo') // dùng method set()
-}
-
-repositories {
-    mavenCentral()
-    
-    // Fabric
-    maven { url "https://maven.fabricmc.net/" }
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/" }
-    maven { url "https://maven.wispforest.io" }
-    maven { url "https://maven.architectury.dev/" }
-    
-    // YACL official repository
-    maven {
-        url "https://maven.isxander.dev/releases"
-        content {
-            includeGroup "dev.isxander"
-        }
+buildscript {
+    dependencies {
+        classpath 'org.codehaus.groovy:groovy-json:3.0.9'
     }
-    
-    // Other common repositories
-    maven { url "https://jitpack.io" }
-    maven { url "https://maven.modrinth.com/repository/releases" }
 }
 
-dependencies {
-    // Minecraft + mappings + loader + fabric api
-    minecraft "com.mojang:minecraft:1.21.11"
-    mappings "net.fabricmc:yarn:1.21.11+build.6:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.19.2"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.4+1.21.11"
-
-    // Libraries
-    modImplementation "dev.isxander:yet-another-config-lib:3.5.0+1.21.11-fabric"
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:10.1.1"
-    modCompileOnly "com.terraformersmc:modmenu:9.0.2"
-    modCompileOnly "dev.emi:emi-fabric:0.6.0:api"
-    modCompileOnly "dev.architectury:architectury-fabric:5.4.42"
-    modCompileOnly "maven.modrinth:jade:1.17.2+fabric"
+plugins {
+    id 'fabric-loom' version '1.16-SNAPSHOT'
+    id 'maven-publish'
 }
+
+group = 'me.ngcsonsplash.fabricaeexnihilo'
+version = '1.0.0+mc1.21.11'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -63,27 +18,77 @@ java {
     withSourcesJar()
 }
 
-tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    it.options.release.set(21)
+repositories {
+    mavenCentral()
+    maven { url "https://maven.fabricmc.net/" }
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/" }
+    maven { url "https://maven.wispforest.io" }
+    maven { url "https://maven.architectury.dev/" }
+    maven { url "https://maven.quiltmc.org/repository/release" }
+    maven { url "https://maven.isxander.dev/releases" }
+    maven { url "https://api.modrinth.com/maven" }
+    maven { url "https://jitpack.io" }
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${archivesBaseName}" }
-    }
+ext {
+    minecraft_version = '1.21.11'
+    yarn_mappings = '1.21.11+build.6'
+    loader_version = '0.19.2'
+    fabric_api_version = '0.141.4+1.21.11'
+
+    // Versions
+    rei_version = '12.1.0'
+    jei_version = '12.1.0'
+    modmenu_version = '7.1.10'
+    emi_version = '0.8.0'
+    yacl_version = '3.5.0+1.21.11-fabric'
+    jade_version = '2.18.0+fabric'
+    wthit_version = '9.9.0'
+    megane_version = '2.8.0'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+
+    // Mod APIs
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+    modCompileOnly "dev.architectury:architectury-fabric:7.10.50"
+    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+    modCompileOnly "com.terraformersmc:modmenu:${modmenu_version}"
+    modCompileOnly "maven.modrinth:jade:${jade_version}"
+    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthit_version}"
+    modCompileOnly "lol.bai.megane:megane-api:${megane_version}"
+
+    // YACL
+    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}"
+
+    // Annotation Processor
+    modImplementation annotationProcessor(include("com.github.mattidragon:configtoolkit:1.3.1"))
+
+    // Runtime Mods
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}" // JEI/REI
+    modRuntimeOnly "dev.emi:emi-fabric:${emi_version}"
+    modRuntimeOnly "com.terraformersmc:modmenu:${modmenu_version}"
+    modRuntimeOnly "maven.modrinth:jade:${jade_version}"
+    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthit_version}"
+    modRuntimeOnly "lol.bai.megane:megane-runtime:${megane_version}"
+    modRuntimeOnly "lol.bai.megane:megane-vanilla:${megane_version}"
 }
 
 loom {
     runs {
         datagen {
-            inherit server
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
             vmArg "-Dfabric-api.datagen.modid=fabricaeexnihilo"
-            ideConfigGenerated = true
+
             runDir "build/datagen/"
+            ideConfigGenerated = true
         }
     }
 
@@ -95,11 +100,11 @@ loom {
     }
 }
 
+// Copy datagen overrides
 tasks.register('copyDatagenOverrides', Copy) {
     from "run/config/fabric_loader_dependencies.json"
     into "build/datagen/config"
 }
-
 clean.finalizedBy(tasks.copyDatagenOverrides)
 tasks.runDatagen.dependsOn(tasks.copyDatagenOverrides)
 clean.delete("src/main/generated")
@@ -111,10 +116,24 @@ processResources {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release.set(21)
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${archivesBaseName}" }
+    }
+    dependsOn tasks.runDatagen
+    from("src/main/generated") {
+        exclude "README.md"
+        exclude ".cache"
+    }
+}
+
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
+    publications.register("mavenJava", MavenPublication) {
+        from components.java
     }
 }
