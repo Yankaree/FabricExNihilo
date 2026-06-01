@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.16.5'
+    id 'fabric-loom' version '1.16.3'
     id 'maven-publish'
 }
 
@@ -19,12 +19,35 @@ repositories {
     maven { url "https://maven.quiltmc.org/repository/release" }
     maven { url "https://maven.isxander.dev/releases" }
     maven { url "https://jitpack.io" }
+    maven { url "https://maven.bai.lol/" }
+    maven {
+        url "https://maven.blamejared.com"
+        content {
+            includeGroup "com.faux.ingredientextension"
+        }
+    }
+    maven {
+        url "http://maven.modmuss50.me/"
+        allowInsecureProtocol = true
+        content {
+            includeGroup "TechReborn"
+        }
+    }
+    maven {
+        url "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
-def minecraft_version = '1.21.11'
-def yarn_mappings = '1.21.11+build.6'
-def loader_version = '0.19.2'
-def fabric_api_version = '0.141.4+1.21.11'
+
 
 // Mod versions
 def rei_version = '13.2.9'
@@ -113,6 +136,18 @@ jar {
     dependsOn tasks.runDatagen
     from("src/main/generated") {
         exclude "README.md"
+        exclude ".cache"
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+ exclude "README.md"
         exclude ".cache"
     }
 }
