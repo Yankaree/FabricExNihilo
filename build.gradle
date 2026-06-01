@@ -54,6 +54,7 @@ repositories {
 def jei_version = '27.4.0.22'
 def modmenu_version = '17.0.0'
 def yacl_version = '3.8.1+1.21.11-fabric'
+def jade_version = '1.21-2.8.6.3'
 
 dependencies {
     minecraft "com.mojang:minecraft:$minecraft_version"
@@ -68,8 +69,9 @@ dependencies {
     // YACL
     modImplementation "dev.isxander:yet-another-config-lib:$yacl_version"
 
-    // Config Loader (for @GenerateMutable)
-    // Optional dependencies (Megane, WTHIT)
+    // JADE dependency
+    modCompileOnly "snownee:jade:$jade_version"
+    modRuntimeOnly "snownee:jade:$jade_version"
 
     // Runtime dependencies
     modRuntimeOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"
