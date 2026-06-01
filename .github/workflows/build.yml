@@ -32,7 +32,7 @@ jobs:
             gradle-
 
       - name: Build mod
-        run: ./gradlew clean build --debug --stacktrace
+        run: ./gradlew clean build --info --stacktrace
 
       - name: Get current GMT+0 datetime
         id: datetime
