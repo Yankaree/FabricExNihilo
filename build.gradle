@@ -70,8 +70,6 @@ dependencies {
 
     // Config Loader (for @GenerateMutable)
     // Optional dependencies (Megane, WTHIT)
-    modCompileOnly "lol.bai:megane:1.0.0"
-    modCompileOnly "mcp.mobius:wthit:1.0.0"
 
     // Runtime dependencies
     modRuntimeOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"

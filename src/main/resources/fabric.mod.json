@@ -40,9 +40,6 @@
     "fabricaeexnihilo.mixin.json"
   ],
   "custom": {
-    "megane:modules": [
-      "ngcsonsplash.fabricaeexnihilo.compatibility.megane.FENMeganeModule"
-    ]
   },
   "depends": {
     "fabricloader": ">=0.15.11",
