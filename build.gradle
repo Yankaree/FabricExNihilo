@@ -20,7 +20,10 @@ repositories {
     maven { url "https://maven.wispforest.io" }
     maven { url "https://maven.architectury.dev/" }
     maven { url "https://maven.quiltmc.org/repository/release" }
-    maven { url "https://maven.isxander.dev/releases" }
+    maven {
+        name = "Xander Repo"
+        url = "https://maven.isxander.dev/releases"
+    }
     maven { url "https://jitpack.io" }
     maven { url "https://maven.bai.lol/" }
     maven {
@@ -55,7 +58,7 @@ def rei_version = '13.2.9'
 def jei_version = '14.13.1.245'
 def emi_version = '1.2.1'
 def modmenu_version = '6.5.0'
-def yacl_version = '3.5.0+1.21.11-fabric'
+def yacl_version = '3.8.1+1.21.11-fabric'
 
 dependencies {
     minecraft "com.mojang:minecraft:$minecraft_version"
