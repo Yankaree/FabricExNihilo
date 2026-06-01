@@ -47,8 +47,6 @@ repositories {
     }
 }
 
-
-
 // Mod versions
 def rei_version = '13.2.9'
 def jei_version = '14.13.1.245'
@@ -136,18 +134,6 @@ jar {
     dependsOn tasks.runDatagen
     from("src/main/generated") {
         exclude "README.md"
-        exclude ".cache"
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
- exclude "README.md"
         exclude ".cache"
     }
 }
