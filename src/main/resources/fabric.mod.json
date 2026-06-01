@@ -29,12 +29,6 @@
       "ngcsonsplash.fabricaeexnihilo.compatibility.ModernIndustrializationApiModule::INSTANCE",
       "ngcsonsplash.fabricaeexnihilo.compatibility.MythicMetalsApiModule::INSTANCE"
     ],
-    "rei_client": [
-      "ngcsonsplash.fabricaeexnihilo.compatibility.rei.PluginEntry"
-    ],
-    "emi": [
-      "ngcsonsplash.fabricaeexnihilo.compatibility.emi.FENEmiPlugin"
-    ],
     "jade": [
       "ngcsonsplash.fabricaeexnihilo.compatibility.jade.FENJadePlugin"
     ],

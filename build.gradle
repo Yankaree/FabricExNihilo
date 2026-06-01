@@ -28,9 +28,6 @@ repositories {
     maven { url "https://maven.bai.lol/" }
     maven {
         url "https://maven.blamejared.com"
-        content {
-            includeGroup "com.faux.ingredientextension"
-        }
     }
     maven {
         url "http://maven.modmuss50.me/"
@@ -54,10 +51,8 @@ repositories {
 }
 
 // Mod versions
-def rei_version = '13.2.9'
-def jei_version = '14.13.1.245'
-def emi_version = '1.2.1'
-def modmenu_version = '6.5.0'
+def jei_version = '27.4.0.22'
+def modmenu_version = '17.0.0'
 def yacl_version = '3.8.1+1.21.11-fabric'
 
 dependencies {
@@ -67,18 +62,14 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_api_version"
 
     // Client-side mods (optional)
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
     modCompileOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"
-    modCompileOnly "dev.emi:emi-fabric:$emi_version:api"
     modCompileOnly "com.terraformersmc:modmenu:$modmenu_version"
 
     // YACL
     modImplementation "dev.isxander:yet-another-config-lib:$yacl_version"
 
     // Runtime dependencies
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
     modRuntimeOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"
-    modRuntimeOnly "dev.emi:emi-fabric:$emi_version"
     modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
 }
 
