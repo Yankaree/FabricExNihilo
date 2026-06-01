@@ -1,6 +1,5 @@
 package ngcsonsplash.fabricaeexnihilo;
 
-import io.github.mattidragon.configloader.api.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
@@ -10,6 +9,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ngcsonsplash.fabricaeexnihilo.config.ConfigManager;
 import ngcsonsplash.fabricaeexnihilo.config.FabricaeExNihiloConfig;
 import ngcsonsplash.fabricaeexnihilo.loot.CopyEnchantmentsLootFunction;
 import ngcsonsplash.fabricaeexnihilo.modules.*;
@@ -52,7 +52,7 @@ public class FabricaeExNihilo implements ModInitializer {
             })
             .build();
     public static final Logger LOGGER = LogManager.getLogger("Fabricae Ex Nihilo");
-    public static final ConfigManager<ngcsonsplash.fabricaeexnihilo.config.FabricaeExNihiloConfig> CONFIG = ConfigManager.create(ngcsonsplash.fabricaeexnihilo.config.FabricaeExNihiloConfig.CODEC, FabricaeExNihiloConfig.DEFAULT, "fabricaeexnihilo");
+    public static final ConfigManager<FabricaeExNihiloConfig> CONFIG = new ConfigManager<>(FabricaeExNihiloConfig.createDefault(), "fabricaeexnihilo");
 
     public static Identifier id(String path) {
         return Identifier.of("fabricaeexnihilo", path);
