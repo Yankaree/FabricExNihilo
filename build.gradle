@@ -5,7 +5,10 @@ plugins {
 
 group = 'me.ngcsonsplash.fabricaeexnihilo'
 version = '1.0.0+mc1.21.11'
-archivesBaseName = 'fabricaeexnihilo'
+
+base {
+    archivesName = archives_base_name
+}
 
 repositories {
     mavenCentral()
@@ -129,7 +132,7 @@ tasks.withType(JavaCompile).configureEach {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${archivesBaseName}" }
+        rename { "${it}_${archives_base_name}" }
     }
     dependsOn tasks.runDatagen
     from("src/main/generated") {
