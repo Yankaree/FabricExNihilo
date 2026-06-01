@@ -77,11 +77,11 @@ loom {
     runs {
         client {
             name = "Client"
-            vmArgs("-Xmx2G")
+            vmArgs("-Xmx2G", "-Dfabric.development=true")
         }
         server {
             name = "Server"
-            vmArgs("-Xmx2G")
+            vmArgs("-Xmx2G", "-Dfabric.development=true")
         }
         datagen {
             name = "Data Generation"
