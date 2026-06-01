@@ -68,6 +68,12 @@ dependencies {
     // YACL
     modImplementation "dev.isxander:yet-another-config-lib:$yacl_version"
 
+    // Config Loader (for @GenerateMutable)
+    modImplementation "io.github.mattidragon:configloader:1.0.0"
+    // Optional dependencies (Megane, WTHIT)
+    modCompileOnly "lol.bai:megane:1.0.0"
+    modCompileOnly "mcp.mobius:wthit:1.0.0"
+
     // Runtime dependencies
     modRuntimeOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"
     modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"

@@ -24,7 +24,7 @@ import ngcsonsplash.fabricaeexnihilo.client.BlockModelRendererFlags;
 import ngcsonsplash.fabricaeexnihilo.modules.barrels.BarrelBlockEntity;
 import ngcsonsplash.fabricaeexnihilo.util.Color;
 
-public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBlockEntity> {
+public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBlockEntity, MatrixStack> {
 
     private static final float XZ_SCALE = 12f / 16f;
     private static final float X_MIN = 2f / 16f;

@@ -8,7 +8,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import ngcsonsplash.fabricaeexnihilo.modules.infested.InfestingLeavesBlockEntity;
 
-public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<InfestingLeavesBlockEntity> {
+public class InfestingLeavesBlockEntityRenderer implements BlockEntityRenderer<InfestingLeavesBlockEntity, MatrixStack> {
 
     public InfestingLeavesBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }

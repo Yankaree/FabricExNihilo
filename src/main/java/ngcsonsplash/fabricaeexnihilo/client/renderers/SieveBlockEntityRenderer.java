@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import ngcsonsplash.fabricaeexnihilo.modules.sieves.SieveBlockEntity;
 
-public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockEntity> {
+public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockEntity, MatrixStack> {
 
     private static final float XZ_SCALE = 0.875F;
     private static final float Y_MIN = 0.0625F;

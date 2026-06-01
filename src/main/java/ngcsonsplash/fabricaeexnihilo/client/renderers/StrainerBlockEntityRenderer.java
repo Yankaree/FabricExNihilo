@@ -12,7 +12,7 @@ import net.minecraft.util.math.RotationAxis;
 import ngcsonsplash.fabricaeexnihilo.modules.strainer.StrainerBlockEntity;
 import java.util.Objects;
 
-public class StrainerBlockEntityRenderer implements BlockEntityRenderer<StrainerBlockEntity> {
+public class StrainerBlockEntityRenderer implements BlockEntityRenderer<StrainerBlockEntity, MatrixStack> {
 
     public StrainerBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }

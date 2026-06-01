@@ -19,7 +19,7 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.World;
 import ngcsonsplash.fabricaeexnihilo.modules.crucibles.CrucibleBlockEntity;
 
-public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<CrucibleBlockEntity> {
+public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<CrucibleBlockEntity, MatrixStack> {
 
     private static final float XZ_SCALE = 12.0F / 16.0F;
     private static final float X_MIN = 2.0F / 16.0F;
