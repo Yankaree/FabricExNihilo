@@ -38,9 +38,6 @@ repositories {
     }
     maven {
         url "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
     }
     maven {
         url "https://www.cursemaven.com"
@@ -69,7 +66,7 @@ dependencies {
     // YACL
     modImplementation "dev.isxander:yet-another-config-lib:$yacl_version"
 
-    // JADE dependency (using Modrinth Maven)
+    // JADE dependency (Correct Modrinth Maven coordinates)
     modCompileOnly "maven.modrinth:jade:$jade_version"
     modRuntimeOnly "maven.modrinth:jade:$jade_version"
 
