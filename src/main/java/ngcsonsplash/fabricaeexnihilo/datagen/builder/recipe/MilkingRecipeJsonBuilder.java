@@ -1,16 +1,13 @@
 package ngcsonsplash.fabricaeexnihilo.datagen.builder.recipe;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 import ngcsonsplash.fabricaeexnihilo.recipe.barrel.MilkingRecipe;
+import net.minecraft.data.server.recipe.RecipeExporter;
 
-public class MilkingRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
+public class MilkingRecipeJsonBuilder {
     private final EntityType<?> entity;
     private final FluidVariant fluid;
     private long amount = 810;
@@ -31,33 +28,14 @@ public class MilkingRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         return this;
     }
 
-    @Override
-    public CraftingRecipeJsonBuilder criterion(String name, AdvancementCriterion<?> criterion) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public CraftingRecipeJsonBuilder group(@Nullable String group) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Item getOutputItem() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Deprecated
-    @Override
     public void offerTo(RecipeExporter exporter) {
-        throw new UnsupportedOperationException();
+        offerTo(exporter, "milking_recipe");
     }
 
-    @Override
     public void offerTo(RecipeExporter exporter, String recipePath) {
         offerTo(exporter, Identifier.of(recipePath));
     }
 
-    @Override
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
         exporter.accept(recipeId, new MilkingRecipe(entity, fluid, amount, cooldown), null);
     }
